@@ -28,28 +28,31 @@ function Table(props: tableProps) {
 
     let filteredHeaderArray: any = [];
     let filteredDataArray: any = [];
-    let dataObject:any = {}
+    let dataObject: any = {};
+
+  
 
     if (tableArray) {
       for (let i = 0; i < tableArray.length; i++) {
-        dataObject = {}
         for (const [key, value] of Object.entries(tableArray[i])) {
-          if (value !== undefined) {
-             dataObject[key] = value
+          if (value !== undefined && !filteredHeaderArray.includes(key)) {
+            filteredHeaderArray.push(key);
           }
         }
-        filteredDataArray.push(dataObject)
       }
-     
     }
 
     if (tableArray) {
-      for (const [key, value] of Object.entries(tableArray[0])) {
-        if (value !== undefined) {
-          filteredHeaderArray.push(key);
+        for (let i = 0; i < tableArray.length; i++) {
+          dataObject = {};
+          for (const [key, value] of Object.entries(tableArray[i])) {
+            if (filteredHeaderArray.includes(key)) {
+              dataObject[key] = value;
+            }
+          }
+          filteredDataArray.push(dataObject);
         }
       }
-    }
 
     console.log(filteredHeaderArray);
 
@@ -57,15 +60,14 @@ function Table(props: tableProps) {
 
     return (
       <table className="table-container">
-          <tr className="row">
-            {filteredHeaderArray.map((element: any) => (
-              <th className="cell">{element}</th>
-            ))}
-          </tr>
-          {filteredDataArray.map((element: any) => (
-            <TableRow data={element}></TableRow>
+        <tr className="row">
+          {filteredHeaderArray.map((element: any) => (
+            <th className="cell">{element}</th>
           ))}
-     
+        </tr>
+        {filteredDataArray.map((element: any) => (
+          <TableRow data={element}></TableRow>
+        ))}
       </table>
     );
   } else {
