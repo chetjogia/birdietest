@@ -3,6 +3,7 @@
 import * as express from "express";
 import {
   getAllEvents,
+  getDistinctCareGiversforUser,
   getDistinctEventsforUser,
   getDistinctUsers,
   getEventsForUserByIdAndFilter,
@@ -23,10 +24,23 @@ eventsRouter.get("/events", async (_req: Request, res: Response) => {
 eventsRouter.get("/events/:id", async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const startDate = req.body.startDate;
-    const endDate = req.body.endDate;
-    const eventType = req.body.eventType;
-    const careGiver = req.body.careGiver;
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+    let eventType;
+    let careGiver;
+
+    if (req.query.eventType === "null") {
+      eventType = null;
+    } else {
+      eventType = req.query.event_type;
+    }
+
+    if (req.query.careGiver === "null") {
+      careGiver = null;
+    } else {
+      careGiver = req.query.event_type;
+    }
+
     const result = await getEventsForUserByIdAndFilter(
       id,
       startDate,
@@ -61,3 +75,17 @@ eventsRouter.get("/distinctusers/", async (_req: Request, res: Response) => {
     res.sendStatus(500);
   }
 });
+
+eventsRouter.get(
+  "/distinctcaregivers/:id",
+  async (req: Request, res: Response) => {
+    const id = req.params.id;
+    try {
+      const result = await getDistinctCareGiversforUser(id);
+      res.status(200).send({ success: true, payload: result });
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(500);
+    }
+  }
+);
