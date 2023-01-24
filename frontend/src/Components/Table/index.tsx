@@ -3,14 +3,14 @@ import "./index.css";
 import TableRow from "./TableRow";
 
 interface tableProps {
-  payload: any;
+  payload: any
 }
 
 function Table(props: tableProps) {
   if (props.payload?.length > 0) {
     const tableArray = props.payload?.map((element: any) => {
       return {
-        Date: new Date(element.timestamp).toLocaleString('en-gb'),
+        Date: new Date(element.timestamp).toLocaleString("en-gb"),
         CareGiver_ID: element.caregiver_id,
         visit_ID: element.visit_id,
         Fluid_Intake_ml: element?.consumed_volume_ml,
@@ -25,11 +25,9 @@ function Table(props: tableProps) {
       };
     });
 
-    console.log("TABLE ARRAY", tableArray);
-
-    let filteredHeaderArray: any = [];
-    let filteredDataArray: any = [];
-    let dataObject: any = {};
+    let filteredHeaderArray: string[] = [];
+    let filteredDataArray: string[] = [];
+    let dataObject:any = {};
 
     if (tableArray) {
       for (let i = 0; i < tableArray.length; i++) {
@@ -53,10 +51,6 @@ function Table(props: tableProps) {
       }
     }
 
-    console.log(filteredHeaderArray);
-
-    console.log(filteredDataArray);
-
     return (
       <div className="main-table">
         <table className="table-container">
@@ -66,7 +60,7 @@ function Table(props: tableProps) {
             ))}
           </tr>
           {filteredDataArray.map((element: any) => (
-            <TableRow data={element}></TableRow>
+            <TableRow key={element.id} data={element}></TableRow>
           ))}
         </table>
       </div>
@@ -74,13 +68,13 @@ function Table(props: tableProps) {
   } else {
     return (
       <div className="main-table">
-        <table className="table-container">
+        <div className="table-container">
           <h1>Instructions:</h1>
           <p>
             Complete search criteria including date range, to see data for care
             recipient
           </p>
-        </table>
+        </div>
       </div>
     );
   }

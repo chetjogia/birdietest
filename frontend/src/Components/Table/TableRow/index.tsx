@@ -3,7 +3,7 @@ import '../../Table/index.css'
 
 
 interface tableRowProps{
-    data:any
+    data:string[]
 }
 
 function TableRow(props:tableRowProps){
