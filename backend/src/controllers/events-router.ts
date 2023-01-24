@@ -28,19 +28,21 @@ eventsRouter.get("/events/:id", async (req: Request, res: Response) => {
     const endDate = req.query.endDate;
     let eventType;
     let careGiver;
+   
 
     if (req.query.eventType === "null") {
       eventType = null;
     } else {
-      eventType = req.query.event_type;
+      eventType = req.query.eventType;
     }
 
     if (req.query.careGiver === "null") {
       careGiver = null;
     } else {
-      careGiver = req.query.event_type;
+      careGiver = req.query.careGiver;
     }
-
+    console.log(eventType)
+    console.log(careGiver);
     const result = await getEventsForUserByIdAndFilter(
       id,
       startDate,
