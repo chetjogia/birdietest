@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Search from "./Components/Search";
 import Summary from "./Components/Summary";
+import Table from "./Components/Table";
 
 function App() {
   const [distinctUsers, setDistinctUsers] = useState<{
@@ -9,9 +10,8 @@ function App() {
     payload: any;
   }>();
   const [filteredUserData, setFilteredUserData] = useState();
-
-
-
+  const [payload, setPayload] = useState()
+  
   useEffect(() => {
     getDistinctUsers();
   }, []);
@@ -22,22 +22,30 @@ function App() {
     setDistinctUsers(data);
   }
 
-
-
-  async function onClickHandler(careRecipient: any, eventType:any, careGiver:any, startDate:any, endDate:any) {
+  async function onClickHandler(
+    careRecipient: any,
+    eventType: any,
+    careGiver: any,
+    startDate: any,
+    endDate: any
+  ) {
     /*     const id = distinctUsers?.payload[0].care_recipient_id; */
-    console.log("Care Recipient", careRecipient)
-    console.log("Event Type", eventType)
-    console.log("Care Giver", careGiver)
-    console.log("Start Date", startDate)
-    console.log("End Date", endDate)
-//`http://localhost:8000/events/${id}?startDate=2019-05-10&endDate=2019-05-12&eventType=null&careGiver=null`
+    console.log("Care Recipient", careRecipient);
+    console.log("Event Type", eventType);
+    console.log("Care Giver", careGiver);
+    console.log("Start Date", startDate);
+    console.log("End Date", endDate);
+    //`http://localhost:8000/events/${id}?startDate=2019-05-10&endDate=2019-05-12&eventType=null&careGiver=null`
     const id = careRecipient;
     const response = await fetch(
       `http://localhost:8000/events/${id}?startDate=${startDate}&endDate=${endDate}&eventType=${eventType}&careGiver=${careGiver}`
     );
     const data = await response.json();
     setFilteredUserData(data);
+
+    const payloadArray = data.payload.map((element:any) => JSON.parse(element.payload))
+    console.log("PAYLOAD", payloadArray)
+    setPayload(payloadArray)
   }
 
   console.log("Distinct USERS", distinctUsers);
@@ -48,6 +56,9 @@ function App() {
       <div className="top-dashboard">
         <Search distinctUsers={distinctUsers} onClickHandler={onClickHandler} />
         <Summary />
+      </div>
+      <div className="bottom-dashboard">
+        <Table payload={payload} />
       </div>
     </div>
   );
