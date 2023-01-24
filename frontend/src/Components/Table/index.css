@@ -3,10 +3,9 @@
     flex-direction: column;
     width: 100%;
     height:100%;
-    background-color: red;
-    border-radius: 10px;
+    background-color:white;
     overflow-y: auto;
-    padding:1rem;
+
 }
 
 .table{
@@ -16,15 +15,23 @@
   
 }
 
+.main-table{
+
+    border-radius: 10px;
+    width: 100%;
+    padding: 1rem;
+    background-color: white;
+}
+
 
 
 .cell{
     padding:0;
     margin:0;
     border:solid;
- 
+
     width:30%;
-    background-color: blue;
+    background-color: white;
 }
 
 .row{

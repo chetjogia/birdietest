@@ -109,9 +109,9 @@ function Search(props: SearchProps) {
             <label>Date Until:</label>
             <input type="date" ref={endDate} />
           </div>
+          
         </div>
-      </div>
-      <button
+        <button className="button"
         onClick={() =>
           props.onClickHandler(
             careRecipient.current?.value,
@@ -124,6 +124,8 @@ function Search(props: SearchProps) {
       >
         Search
       </button>
+      </div>
+   
     </div>
   );
 }

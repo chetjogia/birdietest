@@ -10,18 +10,18 @@ function Table(props: tableProps) {
   if (props.payload?.length > 0) {
     const tableArray = props.payload?.map((element: any) => {
       return {
-        timestamp: element.timestamp,
-        careGiverID: element.caregiver_id,
-        visitId: element.visit_id,
-        fluidIntake: element?.consumed_volume_ml,
-        fluid: element?.fluid,
-        mood: element?.mood,
-        note: element?.note,
-        padCondition: element?.pad_condition,
-        medicationType: element?.medication_type,
-        meal: element?.meal,
-        taskNote: element?.task_schedule_note,
-        taskDefinition: element?.task_definition_description,
+        Date: new Date(element.timestamp).toLocaleString('en-gb'),
+        CareGiver_ID: element.caregiver_id,
+        visit_ID: element.visit_id,
+        Fluid_Intake_ml: element?.consumed_volume_ml,
+        Fluid_Type: element?.fluid,
+        Mood: element?.mood,
+        Note: element?.note,
+        Pad_Condition: element?.pad_condition,
+        Medication_Type: element?.medication_type,
+        Meal: element?.meal,
+        Task_Note: element?.task_schedule_note,
+        Task_Definition: element?.task_definition_description,
       };
     });
 
@@ -30,8 +30,6 @@ function Table(props: tableProps) {
     let filteredHeaderArray: any = [];
     let filteredDataArray: any = [];
     let dataObject: any = {};
-
-  
 
     if (tableArray) {
       for (let i = 0; i < tableArray.length; i++) {
@@ -44,38 +42,47 @@ function Table(props: tableProps) {
     }
 
     if (tableArray) {
-        for (let i = 0; i < tableArray.length; i++) {
-          dataObject = {};
-          for (const [key, value] of Object.entries(tableArray[i])) {
-            if (filteredHeaderArray.includes(key)) {
-              dataObject[key] = value;
-            }
+      for (let i = 0; i < tableArray.length; i++) {
+        dataObject = {};
+        for (const [key, value] of Object.entries(tableArray[i])) {
+          if (filteredHeaderArray.includes(key)) {
+            dataObject[key] = value;
           }
-          filteredDataArray.push(dataObject);
         }
+        filteredDataArray.push(dataObject);
       }
+    }
 
     console.log(filteredHeaderArray);
 
     console.log(filteredDataArray);
 
     return (
-      <table className="table-container">
-        <tr className="row">
-          {filteredHeaderArray.map((element: any) => (
-            <th className="cell">{element}</th>
+      <div className="main-table">
+        <table className="table-container">
+          <tr className="row">
+            {filteredHeaderArray.map((element: any) => (
+              <th className="cell">{element}</th>
+            ))}
+          </tr>
+          {filteredDataArray.map((element: any) => (
+            <TableRow data={element}></TableRow>
           ))}
-        </tr>
-        {filteredDataArray.map((element: any) => (
-          <TableRow data={element}></TableRow>
-        ))}
-      </table>
+        </table>
+      </div>
     );
   } else {
-    return <table className="table-container">
-      <h1>Instructions:</h1>
-      <p>Complete search criteria including date range, to see date for care recipient</p>
-    </table>;
+    return (
+      <div className="main-table">
+        <table className="table-container">
+          <h1>Instructions:</h1>
+          <p>
+            Complete search criteria including date range, to see data for care
+            recipient
+          </p>
+        </table>
+      </div>
+    );
   }
 }
 
