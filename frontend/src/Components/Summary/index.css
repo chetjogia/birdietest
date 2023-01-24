@@ -1,0 +1,30 @@
+.summary-container {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 100%;
+  background-color: red;
+  border-radius: 10px;
+  height: 30%;
+
+  padding-bottom: 1rem;
+}
+
+.attributes {
+  align-self: center;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+.attributes > div {
+  display: flex;
+  width: 30%;
+  height: 20%;
+}
+
+.attributes > div > p {
+  font-size: 0.5rem;
+}
