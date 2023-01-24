@@ -29,3 +29,34 @@ export function getEventsForUserByIdAndDate(
     );
   });
 }
+
+export function getDistinctEventsforUser(
+  id: string
+): Promise<Record<string, unknown>> {
+  return new Promise((resolve, reject) => {
+    db.query(
+      "SELECT event_type, count(*) FROM events WHERE events.care_recipient_id = ? GROUP BY event_type ",
+      [id],
+      (err: any, data: any) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(data);
+      }
+    );
+  });
+}
+
+export function getDistinctUsers(): Promise<Record<string, unknown>> {
+  return new Promise((resolve, reject) => {
+    db.query(
+      "SELECT care_recipient_id, count(*) FROM events GROUP BY care_recipient_id ",
+      (err: any, data: any) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(data);
+      }
+    );
+  });
+}
