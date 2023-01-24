@@ -1,8 +1,8 @@
 import db from "../../db";
-
+import { MysqlError } from "mysql";
 export function getAllEvents(): Promise<Record<string, unknown>> {
   return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM events;", (err: any, data: any) => {
+    db.query("SELECT * FROM events;", (err: MysqlError | null, data: any) => {
       if (err) {
         return reject(err);
       }
@@ -20,7 +20,7 @@ export function getEventsForUserByIdAndDate(
     db.query(
       "SELECT * FROM events WHERE events.care_recipient_id = ? AND timestamp >= ? AND timestamp <= ?",
       [id, startDate, endDate],
-      (err: any, data: any) => {
+      (err: MysqlError | null, data: any) => {
         if (err) {
           return reject(err);
         }
@@ -37,7 +37,7 @@ export function getDistinctEventsforUser(
     db.query(
       "SELECT event_type, count(*) FROM events WHERE events.care_recipient_id = ? GROUP BY event_type ",
       [id],
-      (err: any, data: any) => {
+      (err: MysqlError | null, data: any) => {
         if (err) {
           return reject(err);
         }
@@ -51,7 +51,7 @@ export function getDistinctUsers(): Promise<Record<string, unknown>> {
   return new Promise((resolve, reject) => {
     db.query(
       "SELECT care_recipient_id, count(*) FROM events GROUP BY care_recipient_id ",
-      (err: any, data: any) => {
+      (err: MysqlError | null, data: any) => {
         if (err) {
           return reject(err);
         }
