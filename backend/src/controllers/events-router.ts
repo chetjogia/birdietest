@@ -5,8 +5,8 @@ import {
   getAllEvents,
   getDistinctEventsforUser,
   getDistinctUsers,
-  getEventsForUserByIdAndDate,
-} from "../models/events-controller";
+  getEventsForUserByIdAndFilter,
+} from "../models/events-models";
 import { Request, Response } from "express";
 export const eventsRouter = express.Router();
 
@@ -25,7 +25,15 @@ eventsRouter.get("/events/:id", async (req: Request, res: Response) => {
     const id = req.params.id;
     const startDate = req.body.startDate;
     const endDate = req.body.endDate;
-    const result = await getEventsForUserByIdAndDate(id, startDate, endDate);
+    const eventType = req.body.eventType;
+    const careGiver = req.body.careGiver;
+    const result = await getEventsForUserByIdAndFilter(
+      id,
+      startDate,
+      endDate,
+      eventType,
+      careGiver
+    );
     res.status(200).send({ success: true, payload: result });
   } catch (e) {
     console.log(e);

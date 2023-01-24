@@ -11,15 +11,17 @@ export function getAllEvents(): Promise<Record<string, unknown>> {
   });
 }
 
-export function getEventsForUserByIdAndDate(
+export function getEventsForUserByIdAndFilter(
   id: string,
   startDate: string,
-  endDate: string
+  endDate: string,
+  eventType: string,
+  careGiver: string
 ): Promise<Record<string, unknown>> {
   return new Promise((resolve, reject) => {
     db.query(
-      "SELECT * FROM events WHERE events.care_recipient_id = ? AND timestamp >= ? AND timestamp <= ?",
-      [id, startDate, endDate],
+      "SELECT * FROM events WHERE  events.care_recipient_id = ? AND timestamp >= ? AND timestamp <= ? AND (? IS NULL OR event_type=?) AND (? IS NULL OR caregiver_id=?)",
+      [id, startDate, endDate, eventType, eventType, careGiver, careGiver],
       (err: MysqlError | null, data: any) => {
         if (err) {
           return reject(err);
