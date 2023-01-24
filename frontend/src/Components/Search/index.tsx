@@ -9,6 +9,10 @@ interface SearchProps {
 function Search(props: SearchProps) {
   const careRecipient = useRef<HTMLSelectElement>(null)
   const eventType = useRef<HTMLSelectElement>(null)
+  const careGiver = useRef<HTMLSelectElement>(null)
+  const startDate = useRef<HTMLInputElement>(null)
+  const endDate = useRef<HTMLInputElement>(null)
+
   const [distinctEvents, setDistinctEvents] = useState<{
     success: String;
     payload: any;
@@ -54,23 +58,23 @@ function Search(props: SearchProps) {
       </div>
       <div className="care-giver input-container">
         <label>Care Giver:</label>
-        <select id="event-type-filter" name="event-type-filter" ref={eventType}>
+        <select id="event-type-filter" name="event-type-filter" ref={careGiver}>
           {distinctCareGivers?.payload.map((element: any) => (
             <option value={element.caregiver_id}>{element.caregiver_id}</option>
           ))}
         </select>
       </div>
       <div className="date ">
-        <div className="date-from input-container">
+        <div className="date-from input-container" >
           <label>Date From:</label>
-          <input type="date" />
+          <input type="date" ref={startDate}/>
         </div>
-        <div className="date-to input-container">
+        <div className="date-to input-container" >
           <label>Date Until:</label>
-          <input type="date" />
+          <input type="date" ref={endDate}/>
         </div>
       </div>
-      <button onClick={()=>props.onClickHandler(careRecipient.current?.value)}>Search</button>
+      <button onClick={()=>props.onClickHandler(careRecipient.current?.value, eventType.current?.value, careGiver.current?.value, startDate.current?.value, endDate.current?.value )}>Search</button>
     </div>
   );
 }

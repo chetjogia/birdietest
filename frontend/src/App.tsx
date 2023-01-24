@@ -24,11 +24,17 @@ function App() {
 
 
 
-  async function onClickHandler(careRecipient: any) {
+  async function onClickHandler(careRecipient: any, eventType:any, careGiver:any, startDate:any, endDate:any) {
     /*     const id = distinctUsers?.payload[0].care_recipient_id; */
+    console.log("Care Recipient", careRecipient)
+    console.log("Event Type", eventType)
+    console.log("Care Giver", careGiver)
+    console.log("Start Date", startDate)
+    console.log("End Date", endDate)
+//`http://localhost:8000/events/${id}?startDate=2019-05-10&endDate=2019-05-12&eventType=null&careGiver=null`
     const id = careRecipient;
     const response = await fetch(
-      `http://localhost:8000/events/${id}?startDate=2019-05-10&endDate=2019-05-12&eventType=null&careGiver=null`
+      `http://localhost:8000/events/${id}?startDate=${startDate}&endDate=${endDate}&eventType=${eventType}&careGiver=${careGiver}`
     );
     const data = await response.json();
     setFilteredUserData(data);
