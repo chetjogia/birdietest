@@ -11,6 +11,7 @@ function Table(props: tableProps) {
     const tableArray = props.payload?.map((element: any) => {
       return {
         timestamp: element.timestamp,
+        careGiverID: element.caregiver_id,
         visitId: element.visit_id,
         fluidIntake: element?.consumed_volume_ml,
         fluid: element?.fluid,
@@ -71,7 +72,10 @@ function Table(props: tableProps) {
       </table>
     );
   } else {
-    return <table className="table-container"></table>;
+    return <table className="table-container">
+      <h1>Instructions:</h1>
+      <p>Complete search criteria including date range, to see date for care recipient</p>
+    </table>;
   }
 }
 

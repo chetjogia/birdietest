@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import Search from "./Components/Search";
-import Summary from "./Components/Summary";
+
 import Table from "./Components/Table";
 
 function App() {
@@ -10,8 +10,6 @@ function App() {
     payload: any;
   }>();
   const [filteredUserData, setFilteredUserData] = useState();
-  const [allUserEvents, setAllUserEvents] = useState<{  success: String;
-    payload: any;}>();
   const [payload, setPayload] = useState();
 
   useEffect(() => {
@@ -32,11 +30,20 @@ function App() {
     endDate: any
   ) {
     /*     const id = distinctUsers?.payload[0].care_recipient_id; */
+
+    if(eventType === "all"){
+      eventType = null
+    }
+
+    if(careGiver === "all"){
+      careGiver = null
+    }
     console.log("Care Recipient", careRecipient);
     console.log("Event Type", eventType);
     console.log("Care Giver", careGiver);
     console.log("Start Date", startDate);
     console.log("End Date", endDate);
+
     //`http://localhost:8000/events/${id}?startDate=2019-05-10&endDate=2019-05-12&eventType=null&careGiver=null`
     const id = careRecipient;
     const response = await fetch(
@@ -45,20 +52,18 @@ function App() {
     const data = await response.json();
     setFilteredUserData(data);
 
-    const allEventInTimePeriod = await fetch(
-      `http://localhost:8000/events/${id}?startDate=${startDate}&endDate=${endDate}&eventType=null&careGiver=null`
-    );
-    const dataAllEventsForTimePeriod = await allEventInTimePeriod.json();
-    setAllUserEvents(dataAllEventsForTimePeriod);
-
+ 
     const payloadArray = data.payload.map((element: any) =>
       JSON.parse(element.payload)
     );
     console.log("PAYLOAD", payloadArray);
     setPayload(payloadArray);
+
+
+    
   }
 
-  console.log("ALL USER EVENTS", allUserEvents)
+
   console.log("Distinct USERS", distinctUsers);
   console.log("FILTERED DATA", filteredUserData);
 
@@ -66,7 +71,7 @@ function App() {
     <div className="App">
       <div className="top-dashboard">
         <Search distinctUsers={distinctUsers} onClickHandler={onClickHandler} />
-        <Summary />
+   
       </div>
       <div className="bottom-dashboard">
         <Table payload={payload} />
