@@ -10,8 +10,10 @@ function App() {
     payload: any;
   }>();
   const [filteredUserData, setFilteredUserData] = useState();
-  const [payload, setPayload] = useState()
-  
+  const [allUserEvents, setAllUserEvents] = useState<{  success: String;
+    payload: any;}>();
+  const [payload, setPayload] = useState();
+
   useEffect(() => {
     getDistinctUsers();
   }, []);
@@ -43,11 +45,20 @@ function App() {
     const data = await response.json();
     setFilteredUserData(data);
 
-    const payloadArray = data.payload.map((element:any) => JSON.parse(element.payload))
-    console.log("PAYLOAD", payloadArray)
-    setPayload(payloadArray)
+    const allEventInTimePeriod = await fetch(
+      `http://localhost:8000/events/${id}?startDate=${startDate}&endDate=${endDate}&eventType=null&careGiver=null`
+    );
+    const dataAllEventsForTimePeriod = await allEventInTimePeriod.json();
+    setAllUserEvents(dataAllEventsForTimePeriod);
+
+    const payloadArray = data.payload.map((element: any) =>
+      JSON.parse(element.payload)
+    );
+    console.log("PAYLOAD", payloadArray);
+    setPayload(payloadArray);
   }
 
+  console.log("ALL USER EVENTS", allUserEvents)
   console.log("Distinct USERS", distinctUsers);
   console.log("FILTERED DATA", filteredUserData);
 
