@@ -4,7 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "lib": ["esnext"],
-    "target": "es2015",
+    "target": "es6",
     "outDir": "./lib",
     "removeComments": true,
     "inlineSourceMap": true,

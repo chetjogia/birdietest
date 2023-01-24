@@ -1,5 +1,5 @@
 import * as express from "express";
-import { eventsRouter } from "./routers/events";
+import { eventsRouter } from "./controllers/events-router";
 
 const app = express();
 
