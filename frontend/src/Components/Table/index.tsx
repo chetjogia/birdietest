@@ -77,7 +77,7 @@ function Table(props: tableProps) {
           <h1>Instructions:</h1>
           <p><strong>Step 1: </strong>Choose a care recipient</p>
          <p> <strong>Step 2:</strong> Complete remaining search criteria as desired to see data for
-          care recipient and press "Search" button(Note: Date range is required)</p> 
+          care recipient and press "Search" button (Note: Date range is required)</p> 
           <h2>Example criteria: </h2>
             <p><strong>Care Recipient: </strong>"df50cac5-293c-490d-a06c-ee26796f850d"</p>
             <p><strong>Event Type:</strong> "food_intake_observation"</p>
