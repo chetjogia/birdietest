@@ -7,7 +7,11 @@ interface tableProps {
 }
 
 function Table(props: tableProps) {
+
+
   if (props.payload?.length > 0) {
+
+    //if there is a non empty array then clean the data according to the fields that will be required. Some are optional as they only populate dependent on event type.
     const tableArray = props.payload?.map((element: any) => {
       return {
         Date: new Date(element.timestamp).toLocaleString("en-gb"),
@@ -29,6 +33,7 @@ function Table(props: tableProps) {
     let filteredDataArray: string[] = [];
     let dataObject:any = {};
 
+    //obtain the headers for the table, excluding the values of the tableArray objects that are undefined
     if (tableArray) {
       for (let i = 0; i < tableArray.length; i++) {
         for (const [key, value] of Object.entries(tableArray[i])) {
@@ -39,6 +44,7 @@ function Table(props: tableProps) {
       }
     }
 
+  //obtain the data for the table from the tableArray, based on the headers that exist in the filteredHeaderArray
     if (tableArray) {
       for (let i = 0; i < tableArray.length; i++) {
         dataObject = {};
@@ -51,6 +57,7 @@ function Table(props: tableProps) {
       }
     }
 
+    //render the table with the data, using table row component
     return (
       <div className="main-table">
         <table className="table-container">
@@ -66,13 +73,15 @@ function Table(props: tableProps) {
       </div>
     );
   } else {
+    //render instructions if payload is not present
     return (
       <div className="main-table">
         <div className="table-container">
           <h1>Instructions:</h1>
           <p>
-            Complete search criteria including date range, to see data for care
-            recipient
+            Step 1: Choose a care recipient
+            Step 2: Complete remaining search criteria as desired  to see data for care
+            recipient (Note: Date range is required)
           </p>
         </div>
       </div>

@@ -7,11 +7,15 @@ interface SearchProps {
 }
 
 function Search(props: SearchProps) {
+  //refs to be able to select values from form
+
   const careRecipient = useRef<HTMLSelectElement>(null);
   const eventType = useRef<HTMLSelectElement>(null);
   const careGiver = useRef<HTMLSelectElement>(null);
   const startDate = useRef<HTMLInputElement>(null);
   const endDate = useRef<HTMLInputElement>(null);
+
+  //states for when the care recipient id is chosen, these states contain the distinct events and care givers for the care recipient
 
   const [distinctEvents, setDistinctEvents] = useState<{
     success: String;
@@ -21,6 +25,8 @@ function Search(props: SearchProps) {
     success: String;
     payload: [];
   }>();
+
+  //on changed of the care recipient dropdown, fetch the relevant distinct events and distinct carers and set state
 
   async function onChangeHandler() {
     const id = careRecipient.current?.value;
@@ -51,7 +57,10 @@ function Search(props: SearchProps) {
               ref={careRecipient}
               onChange={onChangeHandler}
             >
-              <option   data-testid="option" value="select">Please Select a Care Recipient</option>
+              <option data-testid="option" value="select">
+                Please Select a Care Recipient
+              </option>
+              {/* populate care recipients into dropdown on mount */}
               {props.distinctUsers?.payload.map((element: any) => (
                 <option key={element.id} value={element.care_recipient_id}>
                   {element.care_recipient_id}
@@ -68,6 +77,7 @@ function Search(props: SearchProps) {
               ref={eventType}
             >
               {!distinctEvents || careRecipient.current?.value === "select" ? (
+                //if no care recipient is selected display please select a care recipient
                 <option value="notice">Please Select a Care Recipient</option>
               ) : (
                 distinctEvents?.payload.map((element: any) => (
@@ -87,8 +97,10 @@ function Search(props: SearchProps) {
             >
               {!distinctCareGivers ||
               careRecipient.current?.value === "select" ? (
+                //if no care recipient is selected display please select a care recipient
                 <option value="select">Please Select a Care Recipient</option>
               ) : (
+                //map the distinct care givers but also give the all option
                 [
                   <option value="all">all</option>,
                   distinctCareGivers?.payload.map((element: any) => (
@@ -114,6 +126,7 @@ function Search(props: SearchProps) {
         </div>
         <button
           className="button"
+          //send the values to parent using on click handler
           onClick={() =>
             props.onClickHandler(
               careRecipient.current?.value,
