@@ -47,10 +47,11 @@ function Search(props: SearchProps) {
             <select
               id="search-filter"
               name="search-filter"
+              data-testid="select"
               ref={careRecipient}
               onChange={onChangeHandler}
             >
-              <option value="select">Please Select a Care Recipient</option>
+              <option   data-testid="option" value="select">Please Select a Care Recipient</option>
               {props.distinctUsers?.payload.map((element: any) => (
                 <option key={element.id} value={element.care_recipient_id}>
                   {element.care_recipient_id}
