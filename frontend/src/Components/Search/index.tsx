@@ -25,13 +25,13 @@ function Search(props: SearchProps) {
   async function onChangeHandler() {
     const id = careRecipient.current?.value;
     const eventResponse = await fetch(
-      `http://localhost:8000/distinctevents/${id}`
+      `https://birdie-test-backend.onrender.com/distinctevents/${id}`
     );
     const eventData = await eventResponse.json();
     setDistinctEvents(eventData);
 
     const careResponse = await fetch(
-      `http://localhost:8000/distinctcaregivers/${id}`
+      `https://birdie-test-backend.onrender.com/distinctcaregivers/${id}`
     );
     const careData = await careResponse.json();
     setDistinctCareGivers(careData);

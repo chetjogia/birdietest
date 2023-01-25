@@ -15,7 +15,7 @@ function App() {
   }, []);
 
   async function getDistinctUsers() {
-    const response = await fetch("http://localhost:8000/distinctusers");
+    const response = await fetch("https://birdie-test-backend.onrender.com/distinctusers");
     const data = await response.json();
     setDistinctUsers(data);
   }
@@ -37,7 +37,7 @@ function App() {
 
     const id = careRecipient;
     const response = await fetch(
-      `http://localhost:8000/events/${id}?startDate=${startDate}&endDate=${endDate}&eventType=${eventType}&careGiver=${careGiver}`
+      `https://birdie-test-backend.onrender.com/events/${id}?startDate=${startDate}&endDate=${endDate}&eventType=${eventType}&careGiver=${careGiver}`
     );
     const data = await response.json();
     const payloadArray = data.payload.map((element: any) =>
