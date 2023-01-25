@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import * as express from "express";
 import {
-  getAllEvents,
   getDistinctCareGiversforUser,
   getDistinctEventsforUser,
   getDistinctUsers,
@@ -11,16 +10,6 @@ import {
 import { Request, Response } from "express";
 export const eventsRouter = express.Router();
 
-eventsRouter.get("/events", async (_req: Request, res: Response) => {
-  try {
-    const result = await getAllEvents();
-    res.status(200).send({ success: true, payload: result });
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-  }
-});
-
 eventsRouter.get("/events/:id", async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
@@ -28,7 +17,6 @@ eventsRouter.get("/events/:id", async (req: Request, res: Response) => {
     const endDate = req.query.endDate;
     let eventType;
     let careGiver;
-   
 
     if (req.query.eventType === "null") {
       eventType = null;
@@ -41,7 +29,7 @@ eventsRouter.get("/events/:id", async (req: Request, res: Response) => {
     } else {
       careGiver = req.query.careGiver;
     }
-    console.log(eventType)
+    console.log(eventType);
     console.log(careGiver);
     const result = await getEventsForUserByIdAndFilter(
       id,

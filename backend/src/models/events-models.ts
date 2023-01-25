@@ -1,6 +1,7 @@
 import db from "../../db";
 import { MysqlError } from "mysql";
-export function getAllEvents(): Promise<Record<string, unknown>> {
+
+/* export function getAllEvents(): Promise<Record<string, unknown>> {
   return new Promise((resolve, reject) => {
     db.query("SELECT * FROM events;", (err: MysqlError | null, data: any) => {
       if (err) {
@@ -10,6 +11,7 @@ export function getAllEvents(): Promise<Record<string, unknown>> {
     });
   });
 }
+ */
 
 export function getEventsForUserByIdAndFilter(
   id: string,
@@ -20,7 +22,7 @@ export function getEventsForUserByIdAndFilter(
 ): Promise<Record<string, unknown>> {
   return new Promise((resolve, reject) => {
     db.query(
-      "SELECT * FROM events WHERE  events.care_recipient_id = ? AND events.timestamp >= ? AND events.timestamp <= ? AND (? IS NULL OR events.event_type=?) AND (? IS NULL OR events.caregiver_id=?)",
+      "SELECT * FROM events WHERE  events.care_recipient_id = ? AND events.timestamp >= ? AND events.timestamp <= ? AND (? IS NULL OR events.event_type=?) AND (? IS NULL OR events.caregiver_id=?) ORDER BY events.timestamp DESC",
       [id, startDate, endDate, eventType, eventType, careGiver, careGiver],
       (err: MysqlError | null, data: any) => {
         if (err) {
