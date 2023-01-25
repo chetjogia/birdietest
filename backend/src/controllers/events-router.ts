@@ -29,8 +29,7 @@ eventsRouter.get("/events/:id", async (req: Request, res: Response) => {
     } else {
       careGiver = req.query.careGiver;
     }
-    console.log(eventType);
-    console.log(careGiver);
+
     const result = await getEventsForUserByIdAndFilter(
       id,
       startDate,
@@ -40,7 +39,6 @@ eventsRouter.get("/events/:id", async (req: Request, res: Response) => {
     );
     res.status(200).send({ success: true, payload: result });
   } catch (e) {
-    console.log(e);
     res.sendStatus(500);
   }
 });
@@ -51,7 +49,6 @@ eventsRouter.get("/distinctevents/:id", async (req: Request, res: Response) => {
     const result = await getDistinctEventsforUser(id);
     res.status(200).send({ success: true, payload: result });
   } catch (e) {
-    console.log(e);
     res.sendStatus(500);
   }
 });
@@ -61,7 +58,6 @@ eventsRouter.get("/distinctusers/", async (_req: Request, res: Response) => {
     const result = await getDistinctUsers();
     res.status(200).send({ success: true, payload: result });
   } catch (e) {
-    console.log(e);
     res.sendStatus(500);
   }
 });
