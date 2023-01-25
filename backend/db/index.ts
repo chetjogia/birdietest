@@ -2,11 +2,11 @@ import { createPool } from "mysql";
 
 // create database pool using mySQL
 const db = createPool({
-  host: "birdie-test.cyosireearno.eu-west-2.rds.amazonaws.com",
-  user: "birdie",
-  password: "7VsGDAXfpEH7Bee",
-  database: "birdietest",
-  port: 3306,
+  host: process.env.SERVER,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
+  port: Number(process.env.DATABASE_PORT),
 });
 
 export default db;
