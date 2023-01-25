@@ -10,6 +10,7 @@ import {
 import { Request, Response } from "express";
 export const eventsRouter = express.Router();
 
+// get request to obtain the events for a user by ID and by a filter
 eventsRouter.get("/events/:id", async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
@@ -43,6 +44,7 @@ eventsRouter.get("/events/:id", async (req: Request, res: Response) => {
   }
 });
 
+//obtain distinct event types by care recipient id
 eventsRouter.get("/distinctevents/:id", async (req: Request, res: Response) => {
   const id = req.params.id;
   try {
@@ -53,6 +55,7 @@ eventsRouter.get("/distinctevents/:id", async (req: Request, res: Response) => {
   }
 });
 
+//obtain distinct care recipients
 eventsRouter.get("/distinctusers/", async (_req: Request, res: Response) => {
   try {
     const result = await getDistinctUsers();
@@ -62,6 +65,7 @@ eventsRouter.get("/distinctusers/", async (_req: Request, res: Response) => {
   }
 });
 
+//obtain distinct care givers by care recipient id
 eventsRouter.get(
   "/distinctcaregivers/:id",
   async (req: Request, res: Response) => {
